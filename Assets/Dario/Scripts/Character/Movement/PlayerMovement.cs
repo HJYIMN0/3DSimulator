@@ -93,6 +93,7 @@ namespace Character
         /// </summary>
         public void SetInputs(ref PlayerCharacterInputs inputs)
         {
+            
             // Clamp input
             Vector3 moveInputVector = Vector3.ClampMagnitude(new Vector3(inputs.MoveAxisRight, 0f, inputs.MoveAxisForward), 1f);
 
@@ -336,6 +337,7 @@ namespace Character
 
             if (_jumpRequested)
             {
+                
                 if (!_jumpConsumed && ((AllowJumpingWhenSliding ? Motor.GroundingStatus.FoundAnyGround : Motor.GroundingStatus.IsStableOnGround) || _timeSinceLastAbleToJump <= JumpPostGroundingGraceTime))
                 {
                     bool hasStamina = true;
@@ -346,6 +348,7 @@ namespace Character
 
                     if (hasStamina)
                     {
+                        print("jump done");
                         // Calculate jump direction before ungrounding
                         Vector3 jumpDirection = Motor.CharacterUp;
                         if (Motor.GroundingStatus.FoundAnyGround && !Motor.GroundingStatus.IsStableOnGround)
