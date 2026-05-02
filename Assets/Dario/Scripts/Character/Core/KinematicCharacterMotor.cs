@@ -611,7 +611,6 @@ namespace KinematicCharacterController
             Vector3 targetVelocity = BaseVelocity + _attachedRigidbodyVelocity;
             print($"Setting Rb.linearVelocity to: {targetVelocity}");//test
             Rb.linearVelocity = targetVelocity;
-            Rb.linearVelocity = targetVelocity;
             print($"Rb.linearVelocity AFTER assignment: {Rb.linearVelocity}");//test
             print($"Rb.constraints: {Rb.constraints}");//test
             print($"Rb.isKinematic: {Rb.isKinematic}");//test

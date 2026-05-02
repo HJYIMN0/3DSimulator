@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6507050976621001632}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6931237726264546080}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Meshes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,12 +77,13 @@ GameObject:
   - component: {fileID: 5743474719978243171}
   - component: {fileID: 3975092157901465915}
   - component: {fileID: 6901548813743642425}
-  - component: {fileID: 8218209688083562885}
   - component: {fileID: 5227180488123725852}
   - component: {fileID: 2502286831310897398}
   - component: {fileID: 2991288066975345774}
   - component: {fileID: 6015471504100814094}
-  m_Layer: 3
+  - component: {fileID: 6123565321480011757}
+  - component: {fileID: 7457445742344775100}
+  m_Layer: 6
   m_Name: RBController
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -130,7 +131,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &6901548813743642425
 MonoBehaviour:
@@ -144,38 +145,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d0406e004285a47ad7be08e213fab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.PlayerManager
-  Movement: {fileID: 0}
+  Movement: {fileID: 7457445742344775100}
   Interaction: {fileID: 2991288066975345774}
   Inventory: {fileID: 6015471504100814094}
   CameraFollowPoint: {fileID: 6008466870250007026}
---- !u!114 &8218209688083562885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4003117905881989628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9600989b068c51d4fa6c451c2abab0e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Character.PlayerMovementRB
-  Controller: {fileID: 0}
-  StaminaSystem: {fileID: 0}
-  MeshRoot: {fileID: 5743474719978243171}
-  OrientationMethod: 0
-  MaxStableMoveSpeed: 4
-  MovementAcceleration: 15
-  OrientationSharpness: 20
-  CrouchSpeedMultiplier: 0.4
-  SprintSpeedMultiplier: 2
-  MaxAirMoveSpeed: 6
-  AirAccelerationSpeed: 30
-  JumpForce: 10
-  JumpForwardBoost: 5
-  CrouchedCapsuleHeight: 0.5
-  GravityMultiplier: 2
-  blockedMovementMultiplier: 0.1
 --- !u!114 &5227180488123725852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +256,63 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &6123565321480011757
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4003117905881989628}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &7457445742344775100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4003117905881989628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3edd6b55a2e6a314e8b4085df65472a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Character.RbPlayerController
+  StaminaSystem: {fileID: 2502286831310897398}
+  MeshRoot: {fileID: 6507050976621001632}
+  MoveSpeed: 6
+  SprintMultiplier: 1.5
+  CrouchMultiplier: 0.5
+  AirControl: 0.3
+  GroundDrag: 6
+  AirDrag: 0.5
+  JumpForce: 8
+  JumpCooldown: 0.2
+  GroundCheckDistance: 0.3
+  GroundLayers:
+    serializedVersion: 2
+    m_Bits: 63
+  MaxSlopeAngle: 45
+  CapsuleRadius: 0.3
+  StandingHeight: 1
+  CrouchHeight: 0
+  Pivot_centered: 0
+  OrientationMethod: 0
+  RotationSpeed: 10
+  ShowDebug: 0
 --- !u!1 &5598522015539358492
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,7 +322,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6008466870250007026}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: CameraTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -323,7 +353,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6073818011448615103}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kid_ghost_v1:joint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +386,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6073818011692630523}
   - component: {fileID: 6073818011692630522}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: LittleGhost_LP (3)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -412,7 +442,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6073818011705205092}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kid_ghost_v1:Devil_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +475,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6073818011842127757}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kid_ghost_v1:joint5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +509,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6073818011857496958}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kid_ghost_v1:joint3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -513,7 +543,7 @@ GameObject:
   - component: {fileID: 6073818011885590469}
   - component: {fileID: 6073818011885590470}
   - component: {fileID: 6073818011885590468}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kid_ghost_v1:Witch_Hat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -604,7 +634,7 @@ GameObject:
   - component: {fileID: 6073818012254169729}
   - component: {fileID: 6073818012254169731}
   - component: {fileID: 6073818012254169730}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kid_ghost_v1:Devil_head1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -692,7 +722,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6073818012257061609}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kid_ghost_v1:joint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -724,7 +754,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6073818012364243559}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: JNTs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -757,7 +787,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6073818012395597534}
   - component: {fileID: 6073818012395597535}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kid_ghost_v1:Ghost_Kid_S1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -855,7 +885,7 @@ GameObject:
   - component: {fileID: 6073818012402933673}
   - component: {fileID: 6073818012402933675}
   - component: {fileID: 6073818012402933674}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kid_ghost_v1:Devil_head2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -943,7 +973,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6073818012657400460}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kid_ghost_v1:joint4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -976,7 +1006,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6073818012814377702}
   - component: {fileID: 6073818012814377703}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kid_ghost_v1:Ghost_Kid_S2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1074,7 +1104,7 @@ GameObject:
   - component: {fileID: 6073818013338982510}
   - component: {fileID: 6073818013338982512}
   - component: {fileID: 6073818013338982511}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kid_ghost_v1:Axe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1162,7 +1192,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 358689315181106308}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
