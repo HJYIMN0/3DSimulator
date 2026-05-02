@@ -620,6 +620,7 @@ namespace KinematicCharacterController
             print($"Transform.position.y: {transform.position.y}");//test
 
             _transform.rotation = _transientRotation;
+            
 
             if (HasPlanarConstraint)
             {
