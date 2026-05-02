@@ -870,12 +870,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1203116316496387339, guid: 2a7f0ecd5d2e26c4c917f895eb31a2cb, type: 3}
+      propertyPath: m_Mass
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 1203116316496387339, guid: 2a7f0ecd5d2e26c4c917f895eb31a2cb, type: 3}
       propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1203116316496387339, guid: 2a7f0ecd5d2e26c4c917f895eb31a2cb, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 1203116316496387339, guid: 2a7f0ecd5d2e26c4c917f895eb31a2cb, type: 3}
+      propertyPath: m_Interpolate
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1203116316496387339, guid: 2a7f0ecd5d2e26c4c917f895eb31a2cb, type: 3}
       propertyPath: m_IsKinematic
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1203116316496387339, guid: 2a7f0ecd5d2e26c4c917f895eb31a2cb, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2961033207201692717, guid: 2a7f0ecd5d2e26c4c917f895eb31a2cb, type: 3}
       propertyPath: MaxStableSlopeAngle
@@ -887,7 +903,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2961033207201692717, guid: 2a7f0ecd5d2e26c4c917f895eb31a2cb, type: 3}
       propertyPath: StableGroundLayers.m_Bits
-      value: 8
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6180921691334362248, guid: 2a7f0ecd5d2e26c4c917f895eb31a2cb, type: 3}
       propertyPath: m_LocalPosition.x

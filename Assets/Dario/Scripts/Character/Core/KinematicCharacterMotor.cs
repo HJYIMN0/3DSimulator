@@ -405,8 +405,10 @@ namespace KinematicCharacterController
             }
 
             Rb.isKinematic = false;
-            Rb.useGravity = true; //controlla
-            Rb.constraints = RigidbodyConstraints.FreezeRotation;
+            Rb.useGravity = true; //test
+            Rb.constraints = RigidbodyConstraints.FreezeRotationX |
+                 RigidbodyConstraints.FreezeRotationY |
+                 RigidbodyConstraints.FreezeRotationZ;//test
             Rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             Rb.interpolation = RigidbodyInterpolation.Interpolate;
             Rb.mass = SimulatedCharacterMass;
@@ -583,18 +585,19 @@ namespace KinematicCharacterController
                     BaseVelocity -= Vector3.ProjectOnPlane(_attachedRigidbodyVelocity, _characterUp);
                 }
             }
-            print("=== PHASE 1 END ===");
+            print("=== PHASE 1 END ===");//test
         }
 
         public void UpdatePhase2(float deltaTime)
-        {print(" phase 2");
+        {
+            print("=== PHASE 2 START ===");//test
             CharacterController.UpdateRotation(ref _transientRotation, deltaTime);
             _characterUp = _transientRotation * _cachedWorldUp;
             _characterForward = _transientRotation * _cachedWorldForward;
             _characterRight = _transientRotation * _cachedWorldRight;
-
+            print($"BaseVelocity BEFORE UpdateVelocity: {BaseVelocity}");//test
             CharacterController.UpdateVelocity(ref BaseVelocity, deltaTime);
-
+            print($"BaseVelocity AFTER UpdateVelocity: {BaseVelocity}");//test
             if (BaseVelocity.magnitude < MinVelocityMagnitude)
             {
                 BaseVelocity = Vector3.zero;
@@ -606,7 +609,15 @@ namespace KinematicCharacterController
             }
 
             Vector3 targetVelocity = BaseVelocity + _attachedRigidbodyVelocity;
+            print($"Setting Rb.linearVelocity to: {targetVelocity}");//test
             Rb.linearVelocity = targetVelocity;
+            Rb.linearVelocity = targetVelocity;
+            print($"Rb.linearVelocity AFTER assignment: {Rb.linearVelocity}");//test
+            print($"Rb.constraints: {Rb.constraints}");//test
+            print($"Rb.isKinematic: {Rb.isKinematic}");//test
+            print($"Capsule.isTrigger: {Capsule.isTrigger}");//test
+            print($"Rb.mass: {Rb.mass}");//test
+            print($"Transform.position.y: {transform.position.y}");//test
 
             _transform.rotation = _transientRotation;
 
@@ -625,10 +636,12 @@ namespace KinematicCharacterController
             }
 
             CharacterController.AfterCharacterUpdate(deltaTime);
+            print("=== PHASE 2 END ===");//test
         }
 
         private void OnCollisionStay(Collision collision)
         {
+            print($"COLLISION WITH: {collision.collider.name}");//test
             if (!InteractiveRigidbodyHandling) return;
 
             Rigidbody hitRigidbody = collision.rigidbody;
@@ -720,21 +733,35 @@ namespace KinematicCharacterController
                 if (groundHitStabilityReport.IsStable)
                 {
                     groundingReport.SnappingPrevented = !IsStableWithSpecialCases(ref groundHitStabilityReport, BaseVelocity);
-                    groundingReport.IsStableOnGround = true;
 
-                    if (!groundingReport.SnappingPrevented)
+                    // AGGIUNTA: Snap solo se abbastanza vicino
+                    float maxSnapDistance = Mathf.Max(CapsuleRadius, MaxStepHeight);
+                    if (groundSweepHit.distance <= maxSnapDistance)
                     {
-                        probingPosition = targetPosition;
+                        groundingReport.IsStableOnGround = true;
 
-                        Vector3 snapDelta = probingPosition - _transform.position;
-                        if (snapDelta.sqrMagnitude > 0.0001f)
+                        if (!groundingReport.SnappingPrevented)
                         {
-                            _transform.position = probingPosition;
-                            Rb.position = probingPosition;
-                        }
-                    }
+                            probingPosition = targetPosition;
 
-                    CharacterController.OnGroundHit(groundSweepHit.collider, groundSweepHit.normal, groundSweepHit.point, ref groundHitStabilityReport);
+                            Vector3 snapDelta = probingPosition - _transform.position;
+                            if (snapDelta.sqrMagnitude > 0.0001f)
+                            {
+                                _transform.position = probingPosition;
+                                Rb.position = probingPosition;
+                            }
+                        }
+
+                        CharacterController?.OnGroundHit(groundSweepHit.collider, groundSweepHit.normal, groundSweepHit.point, ref groundHitStabilityReport);
+                    }
+                    else
+                    {
+                        // Trovato ground ma troppo lontano - consideralo in aria
+                        print($"Ground too far ({groundSweepHit.distance}m) - staying airborne");
+                        groundingReport.IsStableOnGround = false;
+
+                        CharacterController.OnGroundHit(groundSweepHit.collider, groundSweepHit.normal, groundSweepHit.point, ref groundHitStabilityReport);
+                    }
                 }
             }
             else { print("SphereCast HIT NOTHING!"); }//test
@@ -1389,7 +1416,7 @@ namespace KinematicCharacterController
 
             // Disegna la posizione del probe
             Vector3 probeStart = _transform.position + (_transform.rotation * _characterTransformToCapsuleBottomHemi);
-            Gizmos.color = Color.yellow;
+            Gizmos.color = Color.red;//controllami
             Gizmos.DrawWireSphere(probeStart, CapsuleRadius * 0.9f);
 
             // Disegna il ray del ground check

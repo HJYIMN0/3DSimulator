@@ -313,12 +313,12 @@ namespace Character
                 }
 
                 // Gravity
-                currentVelocity += Gravity * deltaTime;
+                //currentVelocity += Gravity * deltaTime;
 
                 // Drag
                 currentVelocity *= (1f / (1f + (Drag * deltaTime)));
             }
-
+            currentVelocity += Gravity * deltaTime;//test
             HandleJumping(ref currentVelocity, deltaTime);
 
             // Additive velocity
