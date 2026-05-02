@@ -1,7 +1,7 @@
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
-public class Door : Interactable
+public class Door : MonoBehaviour
 {
     [Header("Door Settings")]
     [Tooltip("Il transform che fa da perno (hinge/pivot). Se vuoto, usa il transform della porta.")]

@@ -3,13 +3,21 @@ namespace Character
 {
     public class EquipableItem : MonoBehaviour
     {
-        private Rigidbody rb;
+        [SerializeField]private Rigidbody rb;
         private Collider col;
         private AudioSource audioSrc;
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody>();
+            if (rb == null)
+            {
+                rb = GetComponent<Rigidbody>();
+                if (rb == null)
+                {
+                    Debug.LogWarning($"EquipableItem '{name}' has no Rigidbody component! Please add one for proper physics handling.");
+                    return;
+                }
+            }
             col = GetComponent<Collider>();
             audioSrc = GetComponent<AudioSource>();
         }
@@ -19,11 +27,14 @@ namespace Character
         /// </summary>
         public void OnEquipped()
         {
-            if (rb != null)
+            if(rb == null)
             {
+                Debug.LogWarning($"EquipableItem '{name}' has no Rigidbody component! Cannot disable physics on equip.");
+                return;
+            }
+
                 rb.isKinematic = true;
                 rb.detectCollisions = false;
-            }
 
             //if (col != null)
             //    col.enabled = false;
