@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1d243714e5c3614bbc655bf8a00ded0, type: 3}
+  m_Name: State_AgentGoToDestinationRun
+  m_EditorClassIdentifier: Assembly-CSharp::State_AgentGoToDestination_SO
+  PossibleCoState: []
+  PossibleTransitions: []
+  StateCondicionDynamicDistance: {fileID: 11400000, guid: 5ff37ea8929f73941bfb94ada62d155b, type: 2}
+  OnArrivedToDestination: {fileID: 11400000, guid: a04df6fb7f296a34183c3d155f89ecbb, type: 2}
+  targetReachedTolerance: 1.5
+  dynamicTargetSearch: 0.1
+  dynamicDistanceTolerance: 10
+  runOnGoToDestination: 1
+  isDynamicTarget: 1
