@@ -75,14 +75,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5743474719978243171}
+  - component: {fileID: 6123565321480011757}
   - component: {fileID: 3975092157901465915}
   - component: {fileID: 6901548813743642425}
+  - component: {fileID: 7457445742344775100}
   - component: {fileID: 5227180488123725852}
   - component: {fileID: 2502286831310897398}
   - component: {fileID: 2991288066975345774}
   - component: {fileID: 6015471504100814094}
-  - component: {fileID: 6123565321480011757}
-  - component: {fileID: 7457445742344775100}
   m_Layer: 6
   m_Name: RBController
   m_TagString: Player
@@ -106,6 +106,29 @@ Transform:
   - {fileID: 6507050976621001632}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 0}
+--- !u!136 &6123565321480011757
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4003117905881989628}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!54 &3975092157901465915
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -149,6 +172,40 @@ MonoBehaviour:
   Interaction: {fileID: 2991288066975345774}
   Inventory: {fileID: 6015471504100814094}
   CameraFollowPoint: {fileID: 6008466870250007026}
+--- !u!114 &7457445742344775100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4003117905881989628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3edd6b55a2e6a314e8b4085df65472a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Character.RbPlayerController
+  StaminaSystem: {fileID: 2502286831310897398}
+  MeshRoot: {fileID: 6507050976621001632}
+  MoveSpeed: 6
+  SprintMultiplier: 1.5
+  CrouchMultiplier: 0.5
+  AirControl: 0.3
+  GroundDrag: 6
+  AirDrag: 0.5
+  JumpForce: 8
+  JumpCooldown: 0.2
+  GroundCheckDistance: 0.3
+  GroundLayers:
+    serializedVersion: 2
+    m_Bits: 63
+  MaxSlopeAngle: 45
+  CapsuleRadius: 0.3
+  StandingHeight: 1
+  CrouchHeight: 0
+  Pivot_centered: 0
+  OrientationMethod: 0
+  RotationSpeed: 10
+  ShowDebug: 0
 --- !u!114 &5227180488123725852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,63 +313,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!136 &6123565321480011757
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4003117905881989628}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &7457445742344775100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4003117905881989628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3edd6b55a2e6a314e8b4085df65472a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Character.RbPlayerController
-  StaminaSystem: {fileID: 2502286831310897398}
-  MeshRoot: {fileID: 6507050976621001632}
-  MoveSpeed: 6
-  SprintMultiplier: 1.5
-  CrouchMultiplier: 0.5
-  AirControl: 0.3
-  GroundDrag: 6
-  AirDrag: 0.5
-  JumpForce: 8
-  JumpCooldown: 0.2
-  GroundCheckDistance: 0.3
-  GroundLayers:
-    serializedVersion: 2
-    m_Bits: 63
-  MaxSlopeAngle: 45
-  CapsuleRadius: 0.3
-  StandingHeight: 1
-  CrouchHeight: 0
-  Pivot_centered: 0
-  OrientationMethod: 0
-  RotationSpeed: 10
-  ShowDebug: 0
 --- !u!1 &5598522015539358492
 GameObject:
   m_ObjectHideFlags: 0
