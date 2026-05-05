@@ -1,12 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using KinematicCharacterController;
 
 namespace Character
 {
     /// <summary>
     /// Manages all player input using NEW Input System.
-    /// Refactored from old Input.GetAxis to InputSystem.
     /// </summary>
     public class InputManager : MonoBehaviour
     {
@@ -118,7 +116,10 @@ namespace Character
 
             // Setup player manager reference
             if (PlayerManager == null)
-                PlayerManager = FindFirstObjectByType<PlayerManager>(); 
+                PlayerManager = FindFirstObjectByType<PlayerManager>();
+
+            if (CharacterCamera == null)
+                CharacterCamera = FindFirstObjectByType<CameraController>();
 
             // Tell camera to follow transform
             if (CharacterCamera != null && PlayerManager != null)
@@ -164,23 +165,12 @@ namespace Character
 
         private void LateUpdate()
         {
-            // Handle rotating the camera along with physics movers
-            if (CharacterCamera.RotateWithPhysicsMover &&
-                PlayerManager.Movement.Motor.AttachedRigidbody != null)
-            {
-                PhysicsMover mover = PlayerManager.Movement.Motor.AttachedRigidbody.GetComponent<PhysicsMover>();
-                if (mover != null)
-                {
-                    CharacterCamera.PlanarDirection = mover.RotationDeltaFromInterpolation * CharacterCamera.PlanarDirection;
-                    CharacterCamera.PlanarDirection = Vector3.ProjectOnPlane(CharacterCamera.PlanarDirection, PlayerManager.Movement.Motor.CharacterUp).normalized;
-                }
-            }
-
             HandleCameraInput();
         }
 
         private void HandleCameraInput()
         {
+            if (CharacterCamera == null) return;
             // Create the look input vector for the camera
             Vector3 lookInputVector = new Vector3(lookInput.x, lookInput.y, 0f);
 
@@ -213,7 +203,7 @@ namespace Character
         private void HandleCharacterInput()
         {
             if (PlayerManager == null || PlayerManager.Movement == null) return;
-
+            if (CharacterCamera == null) return;
             PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
 
             // Camera

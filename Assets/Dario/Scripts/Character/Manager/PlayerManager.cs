@@ -5,7 +5,7 @@ namespace Character
     public class PlayerManager : MonoBehaviour
     {
         [Header("Components")]
-        public PlayerMovement Movement;
+        public RbPlayerController Movement;
         public PlayerInteraction Interaction;
         public InventorySystem Inventory;
 
@@ -18,7 +18,7 @@ namespace Character
         {
             // Auto-assign components
             if (Movement == null)
-                Movement = GetComponent<PlayerMovement>();
+                Movement = GetComponent<RbPlayerController>();
 
             if (Interaction == null)
                 Interaction = GetComponent<PlayerInteraction>();

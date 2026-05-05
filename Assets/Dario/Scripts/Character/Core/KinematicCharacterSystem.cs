@@ -215,7 +215,7 @@ namespace KinematicCharacterController
 
                 motor.UpdatePhase2(deltaTime);
 
-                motor.Transform.SetPositionAndRotation(motor.TransientPosition, motor.TransientRotation);
+                //motor.Transform.SetPositionAndRotation(motor.TransientPosition, motor.TransientRotation);
             }
 #pragma warning restore 0162
         }
