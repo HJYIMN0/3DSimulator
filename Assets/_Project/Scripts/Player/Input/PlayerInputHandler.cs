@@ -6,11 +6,14 @@ namespace Character
     /// <summary>
     /// Manages all player input using NEW Input System.
     /// </summary>
-    public class InputManager : MonoBehaviour
+    public class PlayerInputHandler : MonoBehaviour
     {
         [Header("References")]
         public PlayerManager PlayerManager;
         public CameraController CharacterCamera;
+
+        [Header("interaction")]
+        [SerializeField] private Interactor interactor;
 
         [Header("Settings")]
         public bool fixedDistance = false;
@@ -67,20 +70,23 @@ namespace Character
             inputActions.Player.Crouch.canceled += ctx => crouchReleased = true;
 
             // Interaction input
-            inputActions.Player.Interact.performed += ctx => {
+            inputActions.Player.Interact.performed += ctx =>
+            {
                 interactPressed = true;
                 if (showInputDebug) Debug.Log("INPUT: Interact");
             };
 
             // Drop/Throw input - track press and release
-            inputActions.Player.Drop.started += ctx => {
+            inputActions.Player.Drop.started += ctx =>
+            {
                 dropHeld = true;
                 dropHoldTime = 0f;
 
                 if (showInputDebug) Debug.Log("INPUT: Drop started");
             };
 
-            inputActions.Player.Drop.canceled += ctx => {
+            inputActions.Player.Drop.canceled += ctx =>
+            {
                 if (dropHeld)
                 {
                     HandleDropRelease();
@@ -89,17 +95,20 @@ namespace Character
             };
 
             // Inventory slot inputs
-            inputActions.Player.Item1.performed += ctx => {
+            inputActions.Player.Item1.performed += ctx =>
+            {
                 item1Pressed = true;
                 if (showInputDebug) Debug.Log("INPUT: Item1");
             };
 
-            inputActions.Player.Item2.performed += ctx => {
+            inputActions.Player.Item2.performed += ctx =>
+            {
                 item2Pressed = true;
                 if (showInputDebug) Debug.Log("INPUT: Item2");
             };
 
-            inputActions.Player.Item3.performed += ctx => {
+            inputActions.Player.Item3.performed += ctx =>
+            {
                 item3Pressed = true;
                 if (showInputDebug) Debug.Log("INPUT: Item3");
             };
@@ -116,12 +125,18 @@ namespace Character
 
             // Setup player manager reference
             if (PlayerManager == null)
-                PlayerManager = FindFirstObjectByType<PlayerManager>();
+                PlayerManager = FindAnyObjectByType<PlayerManager>();
 
             if (CharacterCamera == null)
-                CharacterCamera = FindFirstObjectByType<CameraController>();
+                CharacterCamera = FindAnyObjectByType<CameraController>();
 
-            // Tell camera to follow transform
+            if (interactor == null && PlayerManager != null)
+                interactor = PlayerManager.GetComponentInChildren<Interactor>();
+
+            if (interactor == null)
+                interactor = FindAnyObjectByType<Interactor>();
+
+            // Tell camera to follow transform questa cosa non deve stare qui!!!!!!!!!!!!!!!!!!
             if (CharacterCamera != null && PlayerManager != null)
             {
                 CharacterCamera.SetFollowTransform(PlayerManager.CameraFollowPoint);
@@ -223,10 +238,10 @@ namespace Character
             // Apply inputs to character
             PlayerManager.Movement.SetInputs(ref characterInputs);
 
-            if (interactPressed && PlayerManager.Interaction != null)
+            if (interactPressed && interactor != null)
             {
-                if (showInputDebug) Debug.Log(" INPUT: Calling TryInteract()"); //  Debug
-                PlayerManager.Interaction.TryInteract();
+                if (showInputDebug) Debug.Log("INPUT: Calling Interactor.TryInteract()");
+                interactor.TryInteract();
             }
             // Reset one-frame inputs
             jumpPressed = false;
