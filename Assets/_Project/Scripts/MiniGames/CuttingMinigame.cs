@@ -18,6 +18,13 @@ public class CuttingMinigame : MonoBehaviour
     private Action onFail;
 
     public bool IsRunning => isRunning;
+    public float IndicatorPosition => indicatorPosition;
+    public float SuccessMin => successMin;
+    public float SuccessMax => successMax;
+
+    public event Action OnMinigameStart;
+    public event Action OnMinigameCompleted;
+
     private void Update()
     {
         if(!isRunning)
@@ -55,6 +62,8 @@ public class CuttingMinigame : MonoBehaviour
         onSuccess = successCallback;
         onFail = failCallback;
 
+        OnMinigameStart?.Invoke();
+
         Debug.Log("Cutting minigame started! Press X to cut when the indicator is in the green zone.");
     }
 
@@ -74,6 +83,7 @@ public class CuttingMinigame : MonoBehaviour
         {
             Debug.Log("Cut successful!");
             successCallback?.Invoke();
+            OnMinigameCompleted?.Invoke();
         }
         else
         {
