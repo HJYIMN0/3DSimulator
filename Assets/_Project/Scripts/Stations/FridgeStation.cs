@@ -1,16 +1,36 @@
 using UnityEngine;
 
-public class FridgeStation : MonoBehaviour
+public class FridgeStation : MonoBehaviour, IInteractable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private CarryableItem meatPrefab;
+    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private string interactionPrompt = "Take meal";
+
+    public bool IsInteractable => true;
+    public string InteractionPrompt => interactionPrompt;
+
+    public void Interact(Interactor interactor)
     {
-        
+        if (interactor == null || interactor.CarryController == null)
+            return;
+
+        if (interactor.CarryController.HasItem)
+        {
+            Debug.Log("Cannot pick up meat, already carrying something.");
+            return;
+        }
+
+        if (meatPrefab == null)
+        {
+            Debug.LogError("Meat prefab is not assigned in the inspector.");
+            return;
+        }
+
+        CarryableItem newMeat = Instantiate(meatPrefab, spawnPoint != null ? spawnPoint.position : transform.position + transform.forward,
+            Quaternion.identity
+        );
+
+        interactor.CarryController.TryPickUp(newMeat);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

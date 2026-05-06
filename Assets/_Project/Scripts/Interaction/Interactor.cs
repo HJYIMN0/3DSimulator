@@ -15,6 +15,7 @@ public class Interactor : MonoBehaviour
     private IInteractable currentInteractable;
 
     public IInteractable CurrentInteractable => currentInteractable;
+    public PlayerCarryController CarryController { get; private set; }
 
     private void Awake()
     {
@@ -22,6 +23,12 @@ public class Interactor : MonoBehaviour
         {
             playerCamera = Camera.main;
         }
+        
+        CarryController = GetComponentInParent<PlayerCarryController>();
+        
+        if(CarryController == null)
+            CarryController = GetComponent<PlayerCarryController>();
+
     }
 
     private void Update()

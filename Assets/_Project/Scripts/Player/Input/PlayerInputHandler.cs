@@ -175,7 +175,7 @@ namespace Character
             }
 
             HandleCharacterInput();
-            HandleInventoryInput();
+            //HandleInventoryInput();
         }
 
         private void LateUpdate()
@@ -250,39 +250,39 @@ namespace Character
             interactPressed = false;
         }
 
-        private void HandleInventoryInput()
-        {
-            if (PlayerManager == null || PlayerManager.Inventory == null) return;
+        //private void HandleInventoryInput()
+        //{
+        //    if (PlayerManager == null || PlayerManager.Inventory == null) return;
 
-            // === SCROLL WHEEL: Cycle through slots ===
-            if (scrollForInventory && Mathf.Abs(scrollInput) > 0.1f)
-            {
-                int direction = scrollInput > 0 ? 1 : -1; // Up = next, Down = previous
-                PlayerManager.Inventory.CycleEquippedItem(direction);
+        //    // === SCROLL WHEEL: Cycle through slots ===
+        //    if (scrollForInventory && Mathf.Abs(scrollInput) > 0.1f)
+        //    {
+        //        int direction = scrollInput > 0 ? 1 : -1; // Up = next, Down = previous
+        //        PlayerManager.Inventory.CycleEquippedItem(direction);
 
-                if (showInputDebug)
-                    Debug.Log($"Scroll inventory: {direction}");
-            }
+        //        if (showInputDebug)
+        //            Debug.Log($"Scroll inventory: {direction}");
+        //    }
 
-            // === DIRECT SLOT SELECT (1/2/3) ===
-            if (item1Pressed)
-            {
-                PlayerManager.Inventory.EquipItem(0);
-                item1Pressed = false;
-            }
+        //    // === DIRECT SLOT SELECT (1/2/3) ===
+        //    if (item1Pressed)
+        //    {
+        //        PlayerManager.Inventory.EquipItem(0);
+        //        item1Pressed = false;
+        //    }
 
-            if (item2Pressed)
-            {
-                PlayerManager.Inventory.EquipItem(1);
-                item2Pressed = false;
-            }
+        //    if (item2Pressed)
+        //    {
+        //        PlayerManager.Inventory.EquipItem(1);
+        //        item2Pressed = false;
+        //    }
 
-            if (item3Pressed)
-            {
-                PlayerManager.Inventory.EquipItem(2);
-                item3Pressed = false;
-            }
-        }
+        //    if (item3Pressed)
+        //    {
+        //        PlayerManager.Inventory.EquipItem(2);
+        //        item3Pressed = false;
+        //    }
+        //}
 
 
         /// <summary>
