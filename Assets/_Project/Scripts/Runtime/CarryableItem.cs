@@ -2,10 +2,13 @@ using UnityEngine;
 
 public class CarryableItem : MonoBehaviour
 {
-    public bool IsCarried { get; private set; }
+    [SerializeField] private MeatData meatData;
 
     private Rigidbody _rigidbody;
     private Collider _collider;
+
+    public MeatData MeatData => meatData;
+    public bool IsCarried { get; private set; }
 
     private void Awake()
     {

@@ -1,17 +1,13 @@
 using UnityEngine;
 
-public class FridgeStation : MonoBehaviour, IInteractable
+public class FridgeStation : Workstation
 {
-    [SerializeField] private CarryableItem meatPrefab;
+    [SerializeField] private MeatData meatToSpawn;
     [SerializeField] private Transform spawnPoint;
-    [SerializeField] private string interactionPrompt = "Take meal";
 
-    public bool IsInteractable => true;
-    public string InteractionPrompt => interactionPrompt;
-
-    public void Interact(Interactor interactor)
+    protected override void HandleInteraction(Interactor interactor)
     {
-        if (interactor == null || interactor.CarryController == null)
+        if (interactor.CarryController == null)
             return;
 
         if (interactor.CarryController.HasItem)
@@ -20,13 +16,19 @@ public class FridgeStation : MonoBehaviour, IInteractable
             return;
         }
 
-        if (meatPrefab == null)
+        if (meatToSpawn == null)
         {
             Debug.LogError("Meat prefab is not assigned in the inspector.");
             return;
         }
 
-        CarryableItem newMeat = Instantiate(meatPrefab, spawnPoint != null ? spawnPoint.position : transform.position + transform.forward,
+        if(meatToSpawn.Prefab == null)
+        {
+            Debug.LogError("Meat prefab reference is missing in the MeatData.");
+            return;
+        }
+
+        CarryableItem newMeat = Instantiate(meatToSpawn.Prefab, spawnPoint != null ? spawnPoint.position : transform.position + transform.forward,
             Quaternion.identity
         );
 
