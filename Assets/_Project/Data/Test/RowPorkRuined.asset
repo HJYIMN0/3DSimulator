@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e49483c865a0a8f4aab58b8028fd6b20, type: 3}
-  m_Name: RowPork
+  m_Name: RowPorkRuined
   m_EditorClassIdentifier: Assembly-CSharp::MeatData
-  id: rpMeat
-  displayName: RowPork
+  id: ruinedMeat
+  displayName: Ruined Meat
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 6765118065708730849, guid: d3aef707ba1a39341b2789f96313f978, type: 3}
-  processedState: 1
+  prefab: {fileID: 6765118065708730849, guid: 84fe5f0870d2b0641be0490ead2be02e, type: 3}
+  processedState: 3

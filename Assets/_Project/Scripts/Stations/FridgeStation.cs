@@ -1,11 +1,20 @@
 using UnityEngine;
 
-public class FridgeStation : Workstation
+public class FridgeStation :MonoBehaviour, IInteractable
 {
+    [Header("Interaction")]
+    [SerializeField] private WorkstationData workstationData;
+
+    [Header("Meat Spawn")]
     [SerializeField] private MeatData meatToSpawn;
     [SerializeField] private Transform spawnPoint;
+    public bool IsInteractable => true;
 
-    protected override void HandleInteraction(Interactor interactor)
+    public string InteractionPrompt =>
+        workstationData != null ? workstationData.InteractionPrompt : "Open fridge";
+
+
+    private void HandleInteraction(Interactor interactor)
     {
         if (interactor.CarryController == null)
             return;
@@ -35,4 +44,14 @@ public class FridgeStation : Workstation
         interactor.CarryController.TryPickUp(newMeat);
     }
 
+    public void Interact(Interactor interactor)
+    {
+        if (!IsInteractable)
+            return;
+
+        if (interactor == null)
+            return;
+
+        HandleInteraction(interactor);
+    }
 }

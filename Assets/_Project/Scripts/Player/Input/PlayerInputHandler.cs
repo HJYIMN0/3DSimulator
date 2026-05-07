@@ -18,6 +18,15 @@ namespace Character
         [Header("Settings")]
         public bool fixedDistance = false;
 
+        [Header("Carry")]
+        [SerializeField] private PlayerCarryController carryController;
+
+        [Header("Carry Drop/Throw")]
+        [SerializeField] private float throwHoldThreshold = 0.2f;
+
+        private bool dropHeld;
+        private float dropHoldTime;
+
         [Header("Debug")]
         public bool showInputDebug = false;
 
@@ -54,6 +63,38 @@ namespace Character
                 if (showInputDebug) Debug.Log("INPUT: Interact");
             };
 
+            inputActions.Player.Drop.started += ctx =>
+            {
+                dropHeld = true;
+                dropHoldTime = 0f;
+
+                if (showInputDebug)
+                    Debug.Log("INPUT: Drop/Throw started");
+            };
+
+            inputActions.Player.Drop.canceled += ctx =>
+            {
+                if (!dropHeld)
+                    return;
+
+                if (dropHoldTime >= throwHoldThreshold)
+                {
+                    if (showInputDebug)
+                        Debug.Log("INPUT: Throw carried item");
+
+                    carryController?.ThrowCarriedItem();
+                }
+                else
+                {
+                    if (showInputDebug)
+                        Debug.Log("INPUT: Drop carried item");
+
+                    carryController?.DropCarriedItem();
+                }
+
+                dropHeld = false;
+                dropHoldTime = 0f;
+            };
         }
 
         private void OnDisable()
@@ -78,6 +119,12 @@ namespace Character
             if (interactor == null)
                 interactor = FindAnyObjectByType<Interactor>();
 
+            if (carryController == null && PlayerManager != null)
+                carryController = PlayerManager.GetComponent<PlayerCarryController>();
+
+            if (carryController == null)
+                carryController = FindAnyObjectByType<PlayerCarryController>();
+
             // Tell camera to follow transform questa cosa non deve stare qui!!!!!!!!!!!!!!!!!!
             if (CharacterCamera != null && PlayerManager != null)
             {
@@ -96,12 +143,15 @@ namespace Character
             lookInput = inputActions.Player.Look.ReadValue<Vector2>();
             sprintHeld = inputActions.Player.Sprint.IsPressed();
 
-            
-
             // Re-lock cursor if clicked
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
                 Cursor.lockState = CursorLockMode.Locked;
+            }
+
+            if (dropHeld)
+            {
+                dropHoldTime += Time.deltaTime;
             }
 
             HandleCharacterInput();

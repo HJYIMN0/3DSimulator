@@ -2,9 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CuttingMinigame : MonoBehaviour
+public class CuttingMinigame : MonoBehaviour, IProcessingMinigame
 {
-
     [Header("Settings")]
     [SerializeField] private float indicatorSpeed = 1.5f;
     [SerializeField] private float successMin = 0.4f;
@@ -14,8 +13,7 @@ public class CuttingMinigame : MonoBehaviour
     private int direction = 1;
     private bool isRunning = false;
 
-    private Action onSuccess;
-    private Action onFail;
+    private Action<bool> onComplete;
 
     public bool IsRunning => isRunning;
     public float IndicatorPosition => indicatorPosition;
@@ -27,7 +25,7 @@ public class CuttingMinigame : MonoBehaviour
 
     private void Update()
     {
-        if(!isRunning)
+        if (!isRunning)
             return;
 
         indicatorPosition += direction * indicatorSpeed * Time.deltaTime;
@@ -47,10 +45,9 @@ public class CuttingMinigame : MonoBehaviour
         {
             ResolveCut();
         }
-
     }
 
-    public void StartMinigame(Action successCallback, Action failCallback)
+    public void StartMinigame(Action<bool> onCompleteCallback)
     {
         if (isRunning)
             return;
@@ -59,12 +56,11 @@ public class CuttingMinigame : MonoBehaviour
         indicatorPosition = 0f;
         direction = 1;
 
-        onSuccess = successCallback;
-        onFail = failCallback;
+        onComplete = onCompleteCallback;
 
         OnMinigameStart?.Invoke();
 
-        Debug.Log("Cutting minigame started! Press X to cut when the indicator is in the green zone.");
+        Debug.Log("Cutting minigame started. Press X to cut when the indicator is in the green zone.");
     }
 
     private void ResolveCut()
@@ -73,23 +69,13 @@ public class CuttingMinigame : MonoBehaviour
 
         isRunning = false;
 
-        Action successCallback = onSuccess;
-        Action failCallback = onFail;
+        Action<bool> completedCallback = onComplete;
+        onComplete = null;
 
-        onSuccess = null;
-        onFail = null;
+        Debug.Log(success ? "Cut successful." : "Cut failed.");
 
-        if (success)
-        {
-            Debug.Log("Cut successful!");
-            successCallback?.Invoke();
-            OnMinigameCompleted?.Invoke();
-        }
-        else
-        {
-            Debug.Log("Cut failed!");
-            failCallback?.Invoke();
-        }
+        completedCallback?.Invoke(success);
+
+        OnMinigameCompleted?.Invoke();
     }
-
 }

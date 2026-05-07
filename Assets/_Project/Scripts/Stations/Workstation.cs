@@ -1,24 +1,106 @@
 using UnityEngine;
 
-public abstract class Workstation : MonoBehaviour, IInteractable
+public class Workstation : MonoBehaviour, IInteractable
 {
+    [Header("Workstation Data")]
     [SerializeField] private WorkstationData workstationData;
 
-    public virtual bool IsInteractable => true;
-    public string InteractionPrompt => workstationData != null ? workstationData.InteractionPrompt : "interact";
+    [Header("Meat Placement")]
+    [SerializeField] private Transform meatPlacePoint;
 
-    public string DisplayName => workstationData != null ? workstationData.DisplayName : gameObject.name;
+    [Header("Processing Minigame")]
+    [SerializeField] private MonoBehaviour minigameBehaviour;
 
-    public void Interact (Interactor interactor)
+    [Header("Meat Processing")]
+    [SerializeField] private MeatData requiredInput;
+    [SerializeField] private MeatData successOutput;
+    [SerializeField] private MeatData failOutput;
+
+    private CarryableItem placedItem;
+    private IProcessingMinigame processingMinigame;
+
+    public bool IsInteractable => placedItem == null;
+
+    public string InteractionPrompt =>
+        workstationData != null ? workstationData.InteractionPrompt : "Interact";
+
+    public string DisplayName =>
+        workstationData != null ? workstationData.DisplayName : gameObject.name;
+
+    private void Awake()
     {
-        if(!IsInteractable)
+        if (minigameBehaviour == null)
             return;
 
-        if (interactor == null)
-            return;
+        processingMinigame = minigameBehaviour as IProcessingMinigame;
 
-        HandleInteraction(interactor);
+        if (processingMinigame == null)
+            Debug.LogError($"{minigameBehaviour.name} does not implement IProcessingMinigame.");
     }
 
-    protected abstract void HandleInteraction(Interactor interactor);
+    public void Interact(Interactor interactor)
+    {
+        if (!IsInteractable)
+            return;
+
+        if (interactor == null || interactor.CarryController == null)
+            return;
+
+        if (!interactor.CarryController.HasItem)
+        {
+            Debug.Log("No item to place on workstation.");
+            return;
+        }
+
+        CarryableItem carriedItem = interactor.CarryController.CarriedItem;
+
+        if (carriedItem == null)
+            return;
+
+        if (requiredInput != null && carriedItem.MeatData != requiredInput)
+        {
+            Debug.Log("This meat cannot be processed here.");
+            return;
+        }
+
+        placedItem = interactor.CarryController.ReleaseAt(meatPlacePoint);
+
+        if (processingMinigame != null)
+            processingMinigame.StartMinigame(OnProcessingCompleted);
+        else
+            OnProcessingCompleted(true);
+    }
+
+    private void OnProcessingCompleted(bool success)
+    {
+        MeatData output = success ? successOutput : failOutput;
+
+        if (placedItem != null)
+            placedItem.Consume();
+
+        placedItem = null;
+
+        SpawnOutput(output);
+    }
+
+    private void SpawnOutput(MeatData output)
+    {
+        if (output == null)
+        {
+            Debug.LogWarning("No output meat assigned for this processing result.");
+            return;
+        }
+
+        if (output.Prefab == null)
+        {
+            Debug.LogError($"Output meat prefab is missing in MeatData: {output.name}");
+            return;
+        }
+
+        Vector3 spawnPosition = meatPlacePoint != null
+            ? meatPlacePoint.position
+            : transform.position + transform.forward;
+
+        Instantiate(output.Prefab, spawnPosition, Quaternion.identity);
+    }
 }
