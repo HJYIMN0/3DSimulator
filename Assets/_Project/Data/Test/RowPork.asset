@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49483c865a0a8f4aab58b8028fd6b20, type: 3}
+  m_Name: RowPork
+  m_EditorClassIdentifier: Assembly-CSharp::MeatData
+  id: rpMeat
+  displayName: RowPork
+  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  prefab: {fileID: 6765118065708730849, guid: d3aef707ba1a39341b2789f96313f978, type: 3}
+  processedState: 0

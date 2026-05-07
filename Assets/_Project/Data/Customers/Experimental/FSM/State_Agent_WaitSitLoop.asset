@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828e4fd755cff8c46b1f18a55ad23453, type: 3}
+  m_Name: State_Agent_WaitSitLoop
+  m_EditorClassIdentifier: Assembly-CSharp::State_Agent_Wait
+  PossibleCoState: []
+  PossibleTransitions: []
+  TimeWait: 5
+  IsKinematic: 1
+  NextState: {fileID: 11400000, guid: e76cdfa598d7dce4e8cb427f55ec4de5, type: 2}
