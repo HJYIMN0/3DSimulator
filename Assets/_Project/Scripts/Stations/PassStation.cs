@@ -6,6 +6,9 @@ public class PassStation : MonoBehaviour, IInteractable
     [Header("Interaction")]
     [SerializeField] private WorkstationData workstationData;
 
+    [Header("Reference")]
+    [SerializeField] private Transform dropPoint;
+
     [Header("Pass Settings")]
     [SerializeField] private MeatData requiredMeat;
     [SerializeField] private bool acceptAnyCookedMeat = true;
@@ -43,7 +46,7 @@ public class PassStation : MonoBehaviour, IInteractable
 
         deliveredMeatCount++;
         Debug.Log($"Delivered {carriedItem.MeatData.DisplayName}. Total delivered: {deliveredMeatCount}");
-        carriedItem.Consume();
+        carriedItem.DropAt(dropPoint);
     }
 
     private bool CanAccept(CarryableItem item)
