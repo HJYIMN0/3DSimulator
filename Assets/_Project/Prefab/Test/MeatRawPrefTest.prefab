@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3348599266749920042}
   - component: {fileID: 7709438630658269177}
   - component: {fileID: 6765118065708730849}
+  - component: {fileID: 9223156505043711999}
   m_Layer: 0
   m_Name: MeatRawPrefTest
   m_TagString: Untagged
@@ -126,3 +127,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarryableItem
   meatData: {fileID: 11400000, guid: 297233d0cf8df7f46930dd3515f82145, type: 2}
+--- !u!54 &9223156505043711999
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821268634629352367}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

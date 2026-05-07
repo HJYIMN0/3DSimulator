@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3348599266749920042}
   - component: {fileID: 7709438630658269177}
   - component: {fileID: 6765118065708730849}
-  - component: {fileID: -1245229368420152455}
+  - component: {fileID: 5454361244425164450}
   m_Layer: 0
-  m_Name: MeatCutPrefTest
+  m_Name: MeatRuinedPrefTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: db61296238bc0e2448ddaa99057f4e67, type: 2}
+  - {fileID: 2100000, guid: 6db82346e05065c41a14a3edece05b2e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -126,8 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a747f72f68032144a805a535ae69737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarryableItem
-  meatData: {fileID: 11400000, guid: d830852efb2f13e409fe23169b19d143, type: 2}
---- !u!54 &-1245229368420152455
+  meatData: {fileID: 11400000, guid: 5fb9750415569404cb6cfed0baab1cec, type: 2}
+--- !u!54 &5454361244425164450
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
