@@ -1,19 +1,24 @@
 using UnityEngine;
 
-public class ButcheryStation : MonoBehaviour, IInteractable
+public class ButcheryStation : Workstation
 {
-    [SerializeField] private string interactionPrompt = "Cut the meat";
+    [Header("Meat Placement")]
     [SerializeField] private Transform meatPlacePoint;
+
+    [Header("Cutting Minigame")]
     [SerializeField] private CuttingMinigame cuttingMinigame;
+
+    [Header("Meat Processing")]
+    [SerializeField] private MeatData requiredInput;
+    [SerializeField] private MeatData outputMeat;
 
     private CarryableItem placedItem;
 
-    public bool IsInteractable => true;
-    public string InteractionPrompt => interactionPrompt;
+    public override bool IsInteractable => placedItem == null;
 
-    public void Interact(Interactor interactor)
+    protected override void HandleInteraction(Interactor interactor)
     {
-        if (interactor == null || interactor.CarryController == null)
+        if ( interactor.CarryController == null)
             return;
 
         if(placedItem != null)
@@ -30,6 +35,17 @@ public class ButcheryStation : MonoBehaviour, IInteractable
 
         }
 
+        CarryableItem carriedItem = interactor.CarryController.CarriedItem;
+
+        if (carriedItem == null)
+            return;
+
+        if (requiredInput != null && carriedItem.MeatData != requiredInput)
+        {
+            Debug.Log("This meat cannot be processed here.");
+            return;
+        }
+
         placedItem = interactor.CarryController.ReleaseAt(meatPlacePoint);
 
         if (cuttingMinigame != null)
@@ -40,16 +56,14 @@ public class ButcheryStation : MonoBehaviour, IInteractable
 
     private void OnCutSuccess()
     {
+        Debug.Log("Cut success.");
+
         if (placedItem != null)
-        {
-            Debug.Log("Cut success.");
+            placedItem.Consume();
 
-            if (placedItem != null)
-                placedItem.Consume();
-            //Per ora lo consumo poi implementerò il rilascio del taglio
+        placedItem = null;
 
-            placedItem = null;
-        }
+        SpawnOutputMeat();
     }
 
     private void OnCutFail()
@@ -62,5 +76,23 @@ public class ButcheryStation : MonoBehaviour, IInteractable
         }
 
         //per ora lasciamo ripetere poi implementeremo carne rovinata tagli etc...
+    }
+
+    private void SpawnOutputMeat()
+    {
+        if (outputMeat == null)
+        {
+            Debug.LogError("Output meal is not assigned in the inspector.");
+            return;
+        }
+
+        if(outputMeat.Prefab == null)
+        {
+            Debug.LogError("Output meat prefab is not assigned in the inspector.");
+            return;
+        }
+
+        Vector3 spawnPosition = meatPlacePoint != null ? meatPlacePoint.position : transform.position + transform.forward;
+        Instantiate(outputMeat.Prefab, spawnPosition, Quaternion.identity);
     }
 }

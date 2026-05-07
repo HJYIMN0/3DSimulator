@@ -245,9 +245,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08568e3c6b4b47647a312bfbc02af6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FridgeStation
-  meatPrefab: {fileID: 6765118065708730849, guid: d3aef707ba1a39341b2789f96313f978, type: 3}
+  workstationData: {fileID: 11400000, guid: 07c04bf36f55c0142860714df29c9126, type: 2}
+  meatToSpawn: {fileID: 11400000, guid: 297233d0cf8df7f46930dd3515f82145, type: 2}
   spawnPoint: {fileID: 1767455816}
-  interactionPrompt: Take meal
 --- !u!1 &61895284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1017,9 +1017,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 429deac873767694eaf0c9bc98f8c417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButcheryStation
-  interactionPrompt: Cut the meat
+  workstationData: {fileID: 11400000, guid: a1d2f996f88f1764cb35a1906486abc3, type: 2}
   meatPlacePoint: {fileID: 973695214}
   cuttingMinigame: {fileID: 2037242417}
+  requiredInput: {fileID: 11400000, guid: 297233d0cf8df7f46930dd3515f82145, type: 2}
+  outputMeat: {fileID: 11400000, guid: d830852efb2f13e409fe23169b19d143, type: 2}
 --- !u!1 &672864775
 GameObject:
   m_ObjectHideFlags: 0
