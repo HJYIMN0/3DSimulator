@@ -90,6 +90,36 @@ public class Animator_Generic : MonoBehaviour
 
     }
 
+    public virtual void PlayLoopAction(AnimationClip actionClipToPlay, bool isSmooth = true, int layer = 0)
+    {
+        if (!actionClipToPlay) return;
+
+        AnimatorOverrideController currentOverride = animator.runtimeAnimatorController as AnimatorOverrideController;
+
+        if (currentOverride == null)
+        {
+            currentOverride = new AnimatorOverrideController(animator.runtimeAnimatorController);
+            animator.runtimeAnimatorController = currentOverride;
+        }
+
+        string targetStateName;
+
+        if (useFirstGenericSlot)
+        {
+            currentOverride[Parameters.ParameterClipName1] = actionClipToPlay;
+            targetStateName = "GenericActionLoop";
+        }
+        else
+        {
+            currentOverride[Parameters.ParameterClipName2] = actionClipToPlay;
+            targetStateName = "GenericActionLoop2";
+        }
+
+        useFirstGenericSlot = !useFirstGenericSlot;
+        SelectAnimation(isSmooth, targetStateName, layer);
+
+    }
+
     #endregion
 
 
@@ -97,6 +127,9 @@ public class Animator_Generic : MonoBehaviour
 
     [ContextMenu("QuickSingleAnimation")]
     public void QuickSingleAnimation() => PlaySingleAction(quickClip, false, layerClip);
+
+    [ContextMenu("QuickLoopAnimation")]
+    public void QuickLoopAnimation() => PlaySingleAction(quickClip, false, layerClip);
 
     public virtual void SelectAnimation(bool isSmooth, string nameAnimation, int layer = 0, float startAnimation = 0f)
     {
@@ -106,9 +139,9 @@ public class Animator_Generic : MonoBehaviour
 
     public virtual void ResetAnimatios(bool layer2 = true, bool layer1 = true, bool layer0 = false)
     {
-        if (layer2) SelectAnimation(false, "HumanF@Idle01", 2);
-        if (layer1) SelectAnimation(false, "HumanF@Idle01", 1);
-        if (layer0) SelectAnimation(false, "HumanF@Idle01", 0);
+        if (layer2) SelectAnimation(false, "New State", 2);
+        if (layer1) SelectAnimation(false, "New State", 1);
+        if (layer0) SelectAnimation(false, "New State", 0);
     }
     #endregion
 }

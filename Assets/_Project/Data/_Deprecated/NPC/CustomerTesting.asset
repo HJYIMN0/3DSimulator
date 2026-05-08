@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 759e00d0280ed4a49a3598f8ff5c64fd, type: 3}
-  m_Name: NpcTestDestination
+  m_Name: CustomerTesting
   m_EditorClassIdentifier: Assembly-CSharp::Entity_SO
   EntityName: Nome Generico n2
   Height: 1.8
   PrefabEntity: {fileID: 7630873991454583962, guid: 46c875940fbeeea4a8a8d9daf6d5d573, type: 3}
-  EntityDescription: aaaaaaaaaaaaaa
-  InitialState: {fileID: 11400000, guid: aa035b54f8318b94db4d4a3cc68a314f, type: 2}
+  EntityDescription: Customer
+  PossibleRequiredMeat:
+  - {fileID: 11400000, guid: 23cd37d61e6c636499ce8490d8c4ce9b, type: 2}
+  InitialState: {fileID: 11400000, guid: 8809a54b3a6eb4f4b8ea3432e120d608, type: 2}
   DeathState: {fileID: 11400000, guid: 38c54ac25cca43f4ea78cfa402d3be9f, type: 2}
   RagdollState: {fileID: 11400000, guid: 38c54ac25cca43f4ea78cfa402d3be9f, type: 2}
   ImpactThresholdXZ: 25

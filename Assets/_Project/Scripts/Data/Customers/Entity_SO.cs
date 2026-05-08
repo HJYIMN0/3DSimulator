@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Entity")]
@@ -8,6 +9,9 @@ public class Entity_SO : ScriptableObject
     public float Height = 1.8f;
     public GameObject PrefabEntity;
     public string EntityDescription;
+
+    [Header("Entity Customer")]
+    public List<MeatData> PossibleRequiredMeat;
 
     [Space(2)]
     [Header("Entity State")]

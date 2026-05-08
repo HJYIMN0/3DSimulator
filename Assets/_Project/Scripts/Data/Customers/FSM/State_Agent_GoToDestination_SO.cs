@@ -18,18 +18,18 @@ public class State_Agent_GoToDestination_SO : StateEntity_SO
         ce.SetMoving(ce.GroundDetector.IsGrounded);
         if(targetReachedTolerance < 1) targetReachedTolerance = 1;
 
-        if (!ce.Target) return;
         ce.SetAgentDestinationTimer(dynamicTargetSearch, isDynamicTarget);
     }
 
     public override void StateFixedUpdate(Controller_Entity ce)
     {
-        ce.MovingAgent();
         if (!ce.Target) return;
 
         Vector3 currentFlatPos = new Vector3(ce.transform.position.x, 0, ce.transform.position.z);
         Vector3 targetFlatPos = new Vector3(ce.Target.position.x, 0, ce.Target.position.z);
         float distance = Vector3.Distance(currentFlatPos, targetFlatPos);
+
+        ce.MovingAgent();
 
         if (OnArrivedToDestination && distance <= targetReachedTolerance)
         {

@@ -10,6 +10,8 @@ public class State_Agent_Wait : StateEntity_SO
 
     public override void Enter(Controller_Entity ce)
     {
+        ce.Animator_Generic.AnimationMoving(0f, ce.Entity.RunSpeed, ce.RbEntity);
+
         ce.RbEntity.isKinematic = IsKinematic;
     }
 

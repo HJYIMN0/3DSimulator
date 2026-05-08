@@ -53,15 +53,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c13a033509d15bf4e941000613d96d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Controller_Entity
-  entity: {fileID: 11400000, guid: 1b4deaf8d50973e4dae155df31977f9c, type: 2}
-  currentState: {fileID: 0}
+  entity: {fileID: 11400000, guid: 451f357e59d804146b5512ff092d1fa0, type: 2}
+  currentState: {fileID: 11400000, guid: 38c54ac25cca43f4ea78cfa402d3be9f, type: 2}
   TimeOnCurrentState: 0
   OverrideAnimationAll: {fileID: 0}
-  PointsRoaming: []
-  Target: {fileID: 0}
-  TargetIK: {fileID: 0}
-  RotateToTargetOnIdle: {fileID: 0}
-  RotateToTargetOnMoving: {fileID: 0}
+  pointsRoaming: []
+  target: {fileID: 0}
+  targetIK: {fileID: 0}
+  rotateToTargetOnIdle: {fileID: 0}
+  rotateToTargetOnMoving: {fileID: 0}
   avoidancePriority: 1
   isRandomizeAvoidancePriority: 1
   rotationSpeedOnMoving: 3.5
@@ -276,6 +276,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3739752665710099337}
     m_Modifications:
+    - target: {fileID: 5702022682172421575, guid: 46c875940fbeeea4a8a8d9daf6d5d573, type: 3}
+      propertyPath: transitionDuration
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7110515151930570272, guid: 46c875940fbeeea4a8a8d9daf6d5d573, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
