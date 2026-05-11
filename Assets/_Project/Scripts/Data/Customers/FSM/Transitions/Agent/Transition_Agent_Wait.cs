@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Transition_Agent_Wait : TrasiitionsBase_SO
 {
+    public bool ClearWaitOnExit = true;
     public Vector2 TimeWaitRange = new Vector2(5f, 5f);
 
     public override void OnTransition(Controller_Entity ce) 
@@ -16,5 +17,10 @@ public class Transition_Agent_Wait : TrasiitionsBase_SO
             ce.TimeWait = 0;
             ce.ChangeState(NextState);
         }
+    }
+
+    public override void OnExitTransition(Controller_Entity ce)
+    {
+        if (ClearWaitOnExit) ce.TimeWait = 0;
     }
 }

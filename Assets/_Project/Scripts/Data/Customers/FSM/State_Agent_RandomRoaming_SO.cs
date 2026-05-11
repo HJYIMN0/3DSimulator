@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class State_Agent_RandomRoaming_SO : StateEntity_SO
 {
-    public float targetReachedTolerance = 1.5f;
-    public bool runWhilePatrolling = false;
+    public AnimationClip AnimationOnStart;
+    public float TargetReachedTolerance = 1.5f;
+    public bool RunWhilePatrolling = false;
 
     public override void Enter(Controller_Entity ce)
     {
-        ce.IsRunning = runWhilePatrolling;
+        ce.IsRunning = RunWhilePatrolling;
         ce.SetMoving(true);
 
         Transform randomPoint = ce.PointsRoaming[Random.Range(0, ce.PointsRoaming.Count)];
@@ -31,7 +32,7 @@ public class State_Agent_RandomRoaming_SO : StateEntity_SO
 
         ce.MovingAgent();
 
-        if (distance <= targetReachedTolerance)
+        if (distance <= TargetReachedTolerance)
         {
             Transform nextPoint = ce.PointsRoaming[Random.Range(0, ce.PointsRoaming.Count)];
             if (nextPoint != null) ce.SetDestinationTarget(nextPoint);

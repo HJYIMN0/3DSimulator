@@ -143,11 +143,15 @@ public class Controller_Entity : MonoBehaviour
         if (currentState)
         {
             currentState.Exit(this);
+            foreach (TrasiitionsBase_SO transition in currentState.PossibleTransitions) transition.OnExitTransition(this);
+
             if (currentState.PossibleCoState != null) foreach (StateEntityCo_SO statesCo in currentState.PossibleCoState) if (statesCo) statesCo.Exit(this);
         }
 
         currentState = newState;
         currentState.Enter(this);
+        foreach (TrasiitionsBase_SO transition in currentState.PossibleTransitions) transition.OnEnterTransition(this);
+
         TimeOnCurrentState = 0f;
 
         if (currentState.PossibleCoState != null) foreach (StateEntityCo_SO statesCo in currentState.PossibleCoState) if (statesCo) statesCo.Enter(this);
@@ -246,7 +250,7 @@ public class Controller_Entity : MonoBehaviour
         if (NavMesh.SamplePosition(Target.position, out NavMeshHit hit, 2f, NavMesh.AllAreas))
         {
             lastPositionTarget = Target.position;
-            Agent.SetDestination(hit.position);
+            if(Agent.isActiveAndEnabled) Agent.SetDestination(hit.position);
         }
 
         while (loop)
@@ -264,7 +268,6 @@ public class Controller_Entity : MonoBehaviour
                 }
             }
         }
-
     }
 
     public virtual void StopAgentDestination()

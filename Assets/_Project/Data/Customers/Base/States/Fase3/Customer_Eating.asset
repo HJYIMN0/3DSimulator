@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Customer_Eating
   m_EditorClassIdentifier: Assembly-CSharp::State_Agent_Wait
   PossibleCoState: []
-  PossibleTransitions: []
-  TimeWait: 5
+  PossibleTransitions:
+  - {fileID: 11400000, guid: afefa9cdf27ffd34ab4a2e450c827c96, type: 2}
   IsKinematic: 1
-  NextState: {fileID: 11400000, guid: 56db66fce0bc7e64ebf1cafaf08c5a98, type: 2}

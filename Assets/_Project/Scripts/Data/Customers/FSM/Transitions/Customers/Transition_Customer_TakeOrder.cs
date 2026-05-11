@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 [CreateAssetMenu(fileName = "Transition_Customer_TakeOrder", menuName = "Transition/Customer/TakeOrder")]
 public class Transition_Customer_TakeOrder : TrasiitionsBase_SO
@@ -24,6 +22,7 @@ public class Transition_Customer_TakeOrder : TrasiitionsBase_SO
                         item.transform.localPosition = item.PositionOnNpcHand;
                         ce.SetCurrentItem(item);
                         ce.Animator_Generic.PlayLoopAction(takeAnimation, true, 1);
+                        ce.CustomersBaseLogic.LeaveLine(ce);
                         ce.ChangeState(NextState);
                         return;
                     }

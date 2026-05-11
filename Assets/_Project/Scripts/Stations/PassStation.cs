@@ -13,11 +13,15 @@ public class PassStation : MonoBehaviour, IInteractable
     [SerializeField] private MeatData requiredMeat;
     [SerializeField] private bool acceptAnyCookedMeat = true;
 
+    public GameObject[] TESTOBJ;
+
     private int deliveredMeatCount = 0;
 
     public bool IsInteractable => true;
     public string InteractionPrompt => workstationData != null ? workstationData.InteractionPrompt : "Serve Dish";
 
+    [ContextMenu("TESTSPAWNOBJ")]
+    public void TESTSPAWNOBJ() => Instantiate(TESTOBJ[Random.Range(0, TESTOBJ.Length)], dropPoint.position, Quaternion.identity);
 
     public void Interact(Interactor interactor)
     {

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::State_Agent_GoToDestination_SO
   PossibleCoState: []
   PossibleTransitions: []
+  clipGeneric: {fileID: 0}
   StateCondicionDynamicDistance: {fileID: 0}
   OnArrivedToDestination: {fileID: 11400000, guid: 26535dd8725202245a008282a87ff92b, type: 2}
   targetReachedTolerance: 1.5

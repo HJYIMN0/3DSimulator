@@ -15,6 +15,7 @@ public class Animator_Generic : MonoBehaviour
     protected Animator animator;
     protected FeedBack_Entity feedback;
     protected bool useFirstGenericSlot = true;
+    protected AnimatorOverrideController overrideController;
 
     public Animator Animator => animator;
 
@@ -23,7 +24,12 @@ public class Animator_Generic : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         feedback = GetComponentInParent<FeedBack_Entity>();
 
-        if (quickClip) PlaySingleAction(quickClip, false, layerClip);
+        if (animator.runtimeAnimatorController && !(animator.runtimeAnimatorController is AnimatorOverrideController))
+        {
+            overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+            animator.runtimeAnimatorController = overrideController;
+        }
+        else overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
     }
 
     #region AnimationMoving
@@ -60,64 +66,33 @@ public class Animator_Generic : MonoBehaviour
         SelectAnimation(false, Parameters.ParameterTriggerOnGenericAction);
     }
 
-    public virtual void PlaySingleAction(AnimationClip actionClipToPlay, bool isSmooth = true,int layer = 0)
+    public virtual void PlaySingleAction(AnimationClip actionClipToPlay, bool isSmooth = true, int layer = 0) => SetAnimation(actionClipToPlay, "GenericAction", "GenericAction2", isSmooth, layer);
+    public virtual void PlaySingleAction(AnimationClip[] actionClipToPlay, bool isSmooth = true,int layer = 0) => SetAnimation(actionClipToPlay[Random.Range(0, actionClipToPlay.Length)], "GenericAction", "GenericAction2", isSmooth, layer);
+
+    public virtual void PlayLoopAction(AnimationClip actionClipToPlay, bool isSmooth = true, int layer = 0) => SetAnimation(actionClipToPlay, "GenericActionLoop", "GenericActionLoop2", isSmooth, layer);
+
+    public virtual void PlayLoopAction(AnimationClip[] actionClipToPlay, bool isSmooth = true, int layer = 0) => SetAnimation(actionClipToPlay[Random.Range(0, actionClipToPlay.Length)], "GenericActionLoop", "GenericActionLoop2", isSmooth, layer);
+
+
+    private void SetAnimation(AnimationClip actionClipToPlay,string targetStateName1, string targetStateName2, bool isSmooth = true, int layer = 0)
     {
         if (!actionClipToPlay) return;
-
-        AnimatorOverrideController currentOverride = animator.runtimeAnimatorController as AnimatorOverrideController;
-
-        if (currentOverride == null)
-        {
-            currentOverride = new AnimatorOverrideController(animator.runtimeAnimatorController);
-            animator.runtimeAnimatorController = currentOverride;
-        }
 
         string targetStateName;
 
         if (useFirstGenericSlot)
         {
-            currentOverride[Parameters.ParameterClipName1] = actionClipToPlay;
-            targetStateName = "GenericAction";
+            overrideController[Parameters.ParameterClipName1] = actionClipToPlay;
+            targetStateName = targetStateName1;
         }
         else
         {
-            currentOverride[Parameters.ParameterClipName2] = actionClipToPlay;
-            targetStateName = "GenericAction2"; 
+            overrideController[Parameters.ParameterClipName2] = actionClipToPlay;
+            targetStateName = targetStateName2;
         }
 
         useFirstGenericSlot = !useFirstGenericSlot;
         SelectAnimation(isSmooth, targetStateName, layer);
-
-    }
-
-    public virtual void PlayLoopAction(AnimationClip actionClipToPlay, bool isSmooth = true, int layer = 0)
-    {
-        if (!actionClipToPlay) return;
-
-        AnimatorOverrideController currentOverride = animator.runtimeAnimatorController as AnimatorOverrideController;
-
-        if (currentOverride == null)
-        {
-            currentOverride = new AnimatorOverrideController(animator.runtimeAnimatorController);
-            animator.runtimeAnimatorController = currentOverride;
-        }
-
-        string targetStateName;
-
-        if (useFirstGenericSlot)
-        {
-            currentOverride[Parameters.ParameterClipName1] = actionClipToPlay;
-            targetStateName = "GenericActionLoop";
-        }
-        else
-        {
-            currentOverride[Parameters.ParameterClipName2] = actionClipToPlay;
-            targetStateName = "GenericActionLoop2";
-        }
-
-        useFirstGenericSlot = !useFirstGenericSlot;
-        SelectAnimation(isSmooth, targetStateName, layer);
-
     }
 
     #endregion
@@ -129,7 +104,7 @@ public class Animator_Generic : MonoBehaviour
     public void QuickSingleAnimation() => PlaySingleAction(quickClip, false, layerClip);
 
     [ContextMenu("QuickLoopAnimation")]
-    public void QuickLoopAnimation() => PlaySingleAction(quickClip, false, layerClip);
+    public void QuickLoopAnimation() => PlayLoopAction(quickClip, true, layerClip);
 
     public virtual void SelectAnimation(bool isSmooth, string nameAnimation, int layer = 0, float startAnimation = 0f)
     {
@@ -139,9 +114,9 @@ public class Animator_Generic : MonoBehaviour
 
     public virtual void ResetAnimatios(bool layer2 = true, bool layer1 = true, bool layer0 = false)
     {
-        if (layer2) SelectAnimation(false, "New State", 2);
-        if (layer1) SelectAnimation(false, "New State", 1);
-        if (layer0) SelectAnimation(false, "New State", 0);
+        if (layer2) SelectAnimation(true, "New State", 2);
+        if (layer1) SelectAnimation(true, "New State", 1);
+        if (layer0) SelectAnimation(true, "New State", 0);
     }
     #endregion
 }

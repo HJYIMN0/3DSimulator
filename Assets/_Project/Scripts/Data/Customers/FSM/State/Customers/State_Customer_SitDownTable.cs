@@ -13,6 +13,7 @@ public class State_Customer_SitDownTable : StateEntity_SO
     public override void Enter(Controller_Entity ce)
     {
         IK_Position iKPosition = ce.MyChair.IK_Position;
+        ce.MyChair.SetIsTaken(true);
         ce.Animator_Generic.ResetAnimatios();
 
         if (!iKPosition)

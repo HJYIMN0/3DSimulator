@@ -16,5 +16,9 @@ MonoBehaviour:
   PossibleTransitions:
   - {fileID: 11400000, guid: 4ff9d2038a6af4849b2ffc4b335cfed2, type: 2}
   - {fileID: 11400000, guid: 38c6bd2aeb9cdb54292dd48918f7123a, type: 2}
-  maxDistance: 3
-  nextState: {fileID: 11400000, guid: 8809a54b3a6eb4f4b8ea3432e120d608, type: 2}
+  MaxDriftDistance: 2
+  TargetReachedTolerance: 1
+  RunOnReturn: 0
+  clipsUpperIdle: []
+  ResetAnimationOnExit: 0
+  IsLoopedAnimation: 1

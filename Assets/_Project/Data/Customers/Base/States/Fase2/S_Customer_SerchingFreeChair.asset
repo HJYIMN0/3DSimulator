@@ -15,5 +15,7 @@ MonoBehaviour:
   PossibleCoState: []
   PossibleTransitions:
   - {fileID: 11400000, guid: ca5fdd13b6eac9140ab2f8adadd8adea, type: 2}
-  targetReachedTolerance: 1.5
-  runWhilePatrolling: 0
+  clipGeneric: {fileID: 0}
+  AnimationOnStart: {fileID: 0}
+  TargetReachedTolerance: 1.5
+  RunWhilePatrolling: 0

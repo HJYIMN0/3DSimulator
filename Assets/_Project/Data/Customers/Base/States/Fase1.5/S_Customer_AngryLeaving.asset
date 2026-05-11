@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::State_Customer_Leaving
   PossibleCoState: []
   PossibleTransitions: []
-  clipGeneric: {fileID: 7400000, guid: d288c3ff74d8249419dcf11f53c2e56e, type: 2}
+  clipLeaving: {fileID: 3094330708855449807, guid: b1844fbe628f5bf4ab29e6c68912a708, type: 3}
   targetReachedTolerance: 1
   dynamicTargetSearch: 0.5
   runOnGoToDestination: 0

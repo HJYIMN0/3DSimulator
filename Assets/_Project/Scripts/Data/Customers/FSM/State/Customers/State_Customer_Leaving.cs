@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class State_Customer_Leaving : StateEntity_SO
 {
+    public AnimationClip clipLeaving;
     public float targetReachedTolerance = 1f;
     public float dynamicTargetSearch = 0.5f;
     public bool runOnGoToDestination = false;
@@ -17,7 +18,9 @@ public class State_Customer_Leaving : StateEntity_SO
 
         ce.SetDestinationTarget(ce.CustomersBaseLogic.SpawnPoints[Random.Range(0, ce.CustomersBaseLogic.SpawnPoints.Count)]);
         ce.SetAgentDestinationTimer(dynamicTargetSearch, isDynamicTarget);
-        PlayAnimationClip(ce, true, 1);
+        ce.CustomersBaseLogic.LeaveLine(ce);
+
+        if (clipLeaving) ce.Animator_Generic.PlaySingleAction(clipLeaving, true, 1);
     }
 
     public override void StateFixedUpdate(Controller_Entity ce)
@@ -31,7 +34,13 @@ public class State_Customer_Leaving : StateEntity_SO
         ce.MovingAgent();
 
         if (distance <= targetReachedTolerance)
-        {
+        {   
+            if(ce.CurrentItem)
+            {
+                ce.CurrentItem.Consume();
+                ce.ClearCurrentItem();
+            }
+
             ce.CustomersBaseLogic.ReturnToList(ce);
             return;
         }
