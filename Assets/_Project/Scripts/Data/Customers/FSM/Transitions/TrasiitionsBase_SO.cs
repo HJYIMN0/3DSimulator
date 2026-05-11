@@ -6,7 +6,6 @@ public class TrasiitionsBase_SO : ScriptableObject
     public float CheckInterval = -1f;
 
     public virtual void OnEnterTransition(Controller_Entity ce) { }
-
     public virtual void OnTransition(Controller_Entity ce) { }
     public virtual void OnExitTransition(Controller_Entity ce) { }
 }

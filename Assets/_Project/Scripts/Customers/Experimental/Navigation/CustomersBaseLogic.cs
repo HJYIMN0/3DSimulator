@@ -20,11 +20,8 @@ public class CustomersBaseLogic : MonoBehaviour
 
     [SerializeField] private List<Transform> spawnPoints;
     [SerializeField] private List<Transform> dynimicLinePoints;
-    [SerializeField] private List<Transform> linePoints;
     [SerializeField] private List<Transform> roamingSerchChairPoints;
     [SerializeField] private List<Transform> roamingWaitingForLinePoints;
-
-
 
     [SerializeField] private float delayUniversalMoveLine = 1.75f;
     [SerializeField] private Vector2 delayRangeMoveLine = new Vector2(0.6f, 0.85f);
@@ -55,6 +52,7 @@ public class CustomersBaseLogic : MonoBehaviour
                 player = playerObj.transform;
 
                 playerEyes = new GameObject("EyeTarget").transform;
+                playerEyes.SetParent(player);
                 Vector3 newHeight = player.position;
                 newHeight.y += heightPlayer;
                 playerEyes.position = newHeight;
@@ -234,7 +232,7 @@ public class CustomersBaseLogic : MonoBehaviour
 
     private IEnumerator WaitBeforeFood(Controller_Entity ce)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         ce.SetRoamingPoint(roamingSerchChairPoints);
         ce.ChangeState(stateGoTakeFood);
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Transition_Customer_TakeOrder", menuName = "Transition/Customer/TakeOrder")]
 public class Transition_Customer_TakeOrder : TrasiitionsBase_SO
 {
-    public AnimationClip takeAnimation;
+    public AnimationClip TakeAnimation;
     public float SphereRadius = 2f;
 
     public override void OnTransition(Controller_Entity ce)
@@ -20,8 +20,9 @@ public class Transition_Customer_TakeOrder : TrasiitionsBase_SO
                     {
                         item.PickUp(ce.Animator_Generic.Animator.GetBoneTransform(HumanBodyBones.RightHand));
                         item.transform.localPosition = item.PositionOnNpcHand;
+
                         ce.SetCurrentItem(item);
-                        ce.Animator_Generic.PlayLoopAction(takeAnimation, true, 1);
+                        ce.Animator_Generic.PlayLoopAction(TakeAnimation, true, 1);
                         ce.CustomersBaseLogic.LeaveLine(ce);
                         ce.ChangeState(NextState);
                         return;

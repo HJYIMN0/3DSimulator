@@ -15,4 +15,4 @@ MonoBehaviour:
   NextState: {fileID: 11400000, guid: 82e8ab041dcf71f4c90fbe75245e8f48, type: 2}
   CheckInterval: 1
   ClearWaitOnExit: 1
-  TimeWaitRange: {x: 5, y: 10}
+  TimeWaitRange: {x: 15, y: 20}
