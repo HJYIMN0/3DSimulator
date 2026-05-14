@@ -2,7 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// In questo momento questa classe fa tutto. 
+/// Gestissce animazioni e movimenti dell'entità, ma anche logiche più specifiche come quelle dei clienti.
+/// Va divisa in più classi, magari con un Controller_EntityBase che gestisce solo movimenti e animazioni, e poi classi derivate per clienti, camerieri, ecc... che gestiscono le logiche specifiche di ogni tipo di entità.
+/// E sopratutto una classe per gestire lo spawn
+/// </summary>
 public class Controller_Entity : MonoBehaviour
 {
     [Header("Configuration")]

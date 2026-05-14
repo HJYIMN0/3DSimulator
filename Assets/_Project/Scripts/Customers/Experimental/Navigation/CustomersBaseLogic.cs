@@ -13,6 +13,7 @@ public class CustomersBaseLogic : MonoBehaviour
     [SerializeField] private StateEntity_SO stateWaitOnLine;
     [SerializeField] private StateEntity_SO stateRoaming;
     [SerializeField] private StateEntity_SO stateGoTakeFood;
+    [SerializeField] private StateEntity_SO stateLeaveShop;
 
     [SerializeField] private List<Entity_SO> possibleEntities;
 
@@ -31,6 +32,8 @@ public class CustomersBaseLogic : MonoBehaviour
 
     [SerializeField] private int maxEntityActive = 1;
 
+    [SerializeField] private ShopStateManager shopStateManager;
+
     private Transform player;
     private List<Controller_Entity> entitiesOnScene = new List<Controller_Entity>();
     private List<Controller_Entity> lineWaintig = new List<Controller_Entity>();
@@ -43,7 +46,7 @@ public class CustomersBaseLogic : MonoBehaviour
 
     private void Awake()
     {
-        if (!player)
+        if (!player) //Non sarebbe meglio serilizzare il player e metterlo a mano?
         {
             GameObject playerObj = GameObject.FindWithTag("Player");
 
@@ -51,7 +54,7 @@ public class CustomersBaseLogic : MonoBehaviour
             {
                 player = playerObj.transform;
 
-                playerEyes = new GameObject("EyeTarget").transform;
+                playerEyes = new GameObject("EyeTarget").transform; //Non sarebbe meglio serializzare come stringa il nome se è da cercare in futuro?
                 playerEyes.SetParent(player);
                 Vector3 newHeight = player.position;
                 newHeight.y += heightPlayer;
@@ -59,8 +62,12 @@ public class CustomersBaseLogic : MonoBehaviour
             }
             else Debug.LogError("No Player On Scene");
         }
+    }
 
-        StartCoroutine(TryCustomersRoutine());
+    private void Start()
+    {
+        //StartCoroutine(TryCustomersRoutine());
+        //Commentato perché lo faccio partire dallo ShopStateManager
     }
 
     private void Update()
@@ -99,7 +106,7 @@ public class CustomersBaseLogic : MonoBehaviour
         }
     }
 
-    private IEnumerator TryCustomersRoutine() //Spawna Customer a go go
+    public IEnumerator TryCustomersRoutine() //Spawna Customer a go go
     {
         while(true)
         {
@@ -238,4 +245,23 @@ public class CustomersBaseLogic : MonoBehaviour
     }
 
     #endregion
+
+    public void DismissAllCustomers()
+    {
+        StopAllCoroutines(); // Ferma spawn loop e tutte le coroutine interne
+
+        lineWaintig.Clear();
+        roamingWaiting.Clear();
+
+        foreach (Controller_Entity ce in entitiesOnScene)
+        {
+            if (ce == null || !ce.gameObject.activeInHierarchy) continue;
+
+            // Interrompe logiche in corso (es. sedia prenotata) e avvia uscita
+            if (ce.MyChair != null) ce.ClearMyChair();
+            ce.ChangeState(stateLeaveShop);
+        }
+
+        Debug.Log("CustomersBaseLogic: clienti avviati all'uscita.");
+    }
 }
