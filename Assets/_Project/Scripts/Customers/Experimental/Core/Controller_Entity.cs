@@ -15,7 +15,7 @@ public class Controller_Entity : MonoBehaviour
     public AnimatorOverrideController OverrideAnimationAll;
     [Space(2)]
     [Header("Agent Settings")]
-    [SerializeField] private Transform[] pointsRoaming;
+    [SerializeField] private List<Transform> pointsRoaming;
     [SerializeField] private Transform target;
     [SerializeField] private Transform targetIK;
     [SerializeField] private Transform rotateToTargetOnIdle;
@@ -28,6 +28,14 @@ public class Controller_Entity : MonoBehaviour
     [Header("Agent Settings Rotations")]
     [SerializeField] protected float rotationSpeedOnMoving = 3.5f;
     [SerializeField] protected float rotationSpeedOnIdle = 2f;
+
+
+    [Header("Customer Settings")]
+    public CustomersBaseLogic CustomersBaseLogic {  get; private set; }
+    public CarryableItem CurrentItem { get; private set; }
+    public ChairLogic MyChair { get; private set; }
+
+    public float TimeWait { get; set; }
 
     protected Vector3 lastPositionTarget;
     protected float targetSpeed;
@@ -55,6 +63,7 @@ public class Controller_Entity : MonoBehaviour
     public NavMeshObstacle Obstacle { get; private set; }
 
     public Transform Target => target;
+    public List<Transform> PointsRoaming => pointsRoaming;
     public Transform TargetIK => target;
     public Transform RotateToTargetOnIdle => rotateToTargetOnIdle;
     public Transform RotateToTargetOnMoving => rotateToTargetOnMoving;
@@ -134,11 +143,15 @@ public class Controller_Entity : MonoBehaviour
         if (currentState)
         {
             currentState.Exit(this);
+            foreach (TrasiitionsBase_SO transition in currentState.PossibleTransitions) transition.OnExitTransition(this);
+
             if (currentState.PossibleCoState != null) foreach (StateEntityCo_SO statesCo in currentState.PossibleCoState) if (statesCo) statesCo.Exit(this);
         }
 
         currentState = newState;
         currentState.Enter(this);
+        foreach (TrasiitionsBase_SO transition in currentState.PossibleTransitions) transition.OnEnterTransition(this);
+
         TimeOnCurrentState = 0f;
 
         if (currentState.PossibleCoState != null) foreach (StateEntityCo_SO statesCo in currentState.PossibleCoState) if (statesCo) statesCo.Enter(this);
@@ -237,7 +250,7 @@ public class Controller_Entity : MonoBehaviour
         if (NavMesh.SamplePosition(Target.position, out NavMeshHit hit, 2f, NavMesh.AllAreas))
         {
             lastPositionTarget = Target.position;
-            Agent.SetDestination(hit.position);
+            if(Agent.isActiveAndEnabled) Agent.SetDestination(hit.position);
         }
 
         while (loop)
@@ -255,7 +268,6 @@ public class Controller_Entity : MonoBehaviour
                 }
             }
         }
-
     }
 
     public virtual void StopAgentDestination()
@@ -301,15 +313,35 @@ public class Controller_Entity : MonoBehaviour
     }
 
     public virtual void SetDestinationTarget(Transform target) => this.target = target;
+    public virtual void SetRoamingPoint(List<Transform> points) => pointsRoaming = points;
     public virtual void SetTargetIK(Transform target) => targetIK = target;
     public virtual void SetRotateToTargetOnIdle(Transform target) => rotateToTargetOnIdle = target;
     public virtual void SetRotateToTargetOnMoving(Transform target) => rotateToTargetOnMoving = target;
 
 
     public virtual void ClearDestinationTarget() => target = null;
+    public virtual void ClearRoamingPoint() => pointsRoaming = null;
+
     public virtual void ClearTargetIK() => targetIK = null;
     public virtual void ClearRotateToTargetOnIdle() => rotateToTargetOnIdle = null;
     public virtual void ClearRotateToTargetOnMoving() => rotateToTargetOnMoving = null;
+
+    #endregion
+
+
+    #region Customer
+    public void SetCustomersBaseLogic(CustomersBaseLogic customersBaseLogic) => this.CustomersBaseLogic = customersBaseLogic;
+    public void SetCurrentItem(CarryableItem item) => CurrentItem = item;
+    public void SetMyChair(ChairLogic chair) => MyChair = chair;
+
+
+    public void ClearCustomersBaseLogic() => CustomersBaseLogic = null;
+    public void ClearCurrentItem() => CurrentItem = null;
+    public void ClearMyChair()
+    {
+        MyChair.ClearChair();
+        MyChair = null;
+    }
 
     #endregion
 

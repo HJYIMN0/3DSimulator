@@ -3,11 +3,13 @@ using UnityEngine;
 public class CarryableItem : MonoBehaviour, IInteractable
 {
     [SerializeField] private MeatData meatData;
+    [SerializeField] private Vector3 positionOnNpcHand;
 
     private Rigidbody _rigidbody;
     private Collider _collider;
 
     public MeatData MeatData => meatData;
+    public Vector3 PositionOnNpcHand => positionOnNpcHand;
     public bool IsCarried { get; private set; }
 
     public bool IsInteractable => !IsCarried;

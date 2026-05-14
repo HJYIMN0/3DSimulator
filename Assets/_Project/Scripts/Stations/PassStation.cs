@@ -6,15 +6,22 @@ public class PassStation : MonoBehaviour, IInteractable
     [Header("Interaction")]
     [SerializeField] private WorkstationData workstationData;
 
+    [Header("Reference")]
+    [SerializeField] private Transform dropPoint;
+
     [Header("Pass Settings")]
     [SerializeField] private MeatData requiredMeat;
     [SerializeField] private bool acceptAnyCookedMeat = true;
+
+    public GameObject[] TESTOBJ;
 
     private int deliveredMeatCount = 0;
 
     public bool IsInteractable => true;
     public string InteractionPrompt => workstationData != null ? workstationData.InteractionPrompt : "Serve Dish";
 
+    [ContextMenu("TESTSPAWNOBJ")]
+    public void TESTSPAWNOBJ() => Instantiate(TESTOBJ[Random.Range(0, TESTOBJ.Length)], dropPoint.position, Quaternion.identity);
 
     public void Interact(Interactor interactor)
     {
@@ -43,7 +50,7 @@ public class PassStation : MonoBehaviour, IInteractable
 
         deliveredMeatCount++;
         Debug.Log($"Delivered {carriedItem.MeatData.DisplayName}. Total delivered: {deliveredMeatCount}");
-        carriedItem.Consume();
+        carriedItem.DropAt(dropPoint);
     }
 
     private bool CanAccept(CarryableItem item)
