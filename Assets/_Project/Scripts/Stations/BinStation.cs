@@ -13,6 +13,11 @@ public class BinStation : MonoBehaviour,IInteractable
     public bool IsInteractable => true;
     public string InteractionPrompt => workstationData != null ? workstationData.InteractionPrompt : "Put in trash";
 
+    public string GetInteractionPrompt(Interactor interactor)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Interact(Interactor interactor)
     {
         if (interactor == null || interactor.CarryController == null)

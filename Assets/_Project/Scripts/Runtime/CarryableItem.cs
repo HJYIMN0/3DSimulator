@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CarryableItem : MonoBehaviour, IInteractable
@@ -13,9 +14,6 @@ public class CarryableItem : MonoBehaviour, IInteractable
     public bool IsCarried { get; private set; }
 
     public bool IsInteractable => !IsCarried;
-
-    public string InteractionPrompt =>
-        meatData != null ? $"Pick up {meatData.DisplayName}" : "Pick up item";
 
     private void Awake()
     {
@@ -83,6 +81,23 @@ public class CarryableItem : MonoBehaviour, IInteractable
 
         _rigidbody.AddForce(direction.normalized * force, ForceMode.Impulse);
     }
+
+    public string GetInteractionPrompt(Interactor interactor)
+    {
+        if (!IsInteractable)
+            return "";
+
+        if (interactor == null || interactor.CarryController == null)
+            return "";
+
+        if (interactor.CarryController.HasItem)
+            return "Hands are full";
+
+        return meatData != null
+            ? $"Press E to pick up {meatData.DisplayName}"
+            : "Press E to pick up item";
+    }
+
     public void Consume()
     {
         Destroy(gameObject);

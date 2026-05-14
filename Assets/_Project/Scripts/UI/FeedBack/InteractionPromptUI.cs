@@ -55,15 +55,22 @@ public class InteractionPromptUI : MonoBehaviour
 
     private void Refresh(IInteractable interactable)
     {
-        if (interactable != null)
-        {
-            promptText.text = interactable.InteractionPrompt;
-            Show();
-        }
-        else
+        if (interactable == null)
         {
             Hide();
+            return;
         }
+
+        string prompt = interactable.GetInteractionPrompt(interaction);
+
+        if (string.IsNullOrWhiteSpace(prompt))
+        {
+            Hide();
+            return;
+        }
+
+        promptText.text = prompt;
+        Show();
     }
 
 }

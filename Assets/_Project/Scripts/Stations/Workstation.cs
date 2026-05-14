@@ -21,9 +21,6 @@ public class Workstation : MonoBehaviour, IInteractable
 
     public bool IsInteractable => placedItem == null;
 
-    public string InteractionPrompt =>
-        workstationData != null ? workstationData.InteractionPrompt : "Interact";
-
     public string DisplayName =>
         workstationData != null ? workstationData.DisplayName : gameObject.name;
 
@@ -102,5 +99,28 @@ public class Workstation : MonoBehaviour, IInteractable
             : transform.position + transform.forward;
 
         Instantiate(output.Prefab, spawnPosition, Quaternion.identity);
+    }
+
+    public string GetInteractionPrompt(Interactor interactor)
+    {
+        if (!IsInteractable)
+            return workstationData != null ? workstationData.BlockedPrompt : "";
+
+        if (interactor == null || interactor.CarryController == null)
+            return "";
+
+        if (!interactor.CarryController.HasItem)
+            return workstationData != null ? workstationData.EmptyHandPrompt : "Prendi qualcosa prima";
+
+        CarryableItem carriedItem = interactor.CarryController.CarriedItem;
+
+        if (carriedItem == null)
+            return "";
+
+        if (requiredInput != null && carriedItem.MeatData != requiredInput)
+            return workstationData != null ? workstationData.InvalidItemPrompt : "Oggetto non valido";
+
+        string basePrompt = workstationData != null ? workstationData.InteractionPrompt : "interagire";
+        return $"Premi E per {basePrompt}";
     }
 }
